@@ -191,16 +191,15 @@ const QueryForm = () => {
                 <p style={{ fontSize: '14px', color: '#333', margin: '5px 0' }}>
                   <strong>Message:</strong> {query.message}
                 </p>
-                {query.reply && (
+                {query.reply ? (
                   <p style={{ fontSize: '14px', color: '#333', margin: '5px 0' }}>
-                    <strong>Reply:</strong> {query.reply}
+                    <strong>Admin Reply:</strong> {query.reply}
                   </p>
-                )}
-                {query.autoReply && (
-                  <p style={{ fontSize: '14px', color: '#333', margin: '5px 0' }}>
-                    <strong>Auto Reply:</strong> {query.autoReply}
+                ) : query.status === 'complete' ? (
+                  <p style={{ fontSize: '14px', color: '#f44336', margin: '5px 0' }}>
+                    <strong>Admin Reply:</strong> No reply provided
                   </p>
-                )}
+                ) : null}
                 <p style={{ fontSize: '14px', color: '#666', margin: '5px 0' }}>
                   <strong>Status:</strong> {query.status.charAt(0).toUpperCase() + query.status.slice(1)}
                 </p>

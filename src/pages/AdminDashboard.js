@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { auth } from '../firebase';
 import IncomeChart from '../components/IncomeChart';
 import ProductForm from '../components/ProductForm';
+import SalesPage from '../pages/SalesPage';
 
 const AdminDashboard = () => {
   const [products, setProducts] = useState([]);
@@ -465,34 +466,7 @@ const AdminDashboard = () => {
         )}
 
         {activeSection === 'sales' && (
-          <div>
-            <h3 style={{ color: '#333', marginBottom: '15px' }}>Sales</h3>
-            {sales.length === 0 ? (
-              <p style={{ textAlign: 'center', color: '#666', fontSize: '16px' }}>
-                No sales available
-              </p>
-            ) : (
-              <ul style={{ listStyleType: 'none', padding: 0 }}>
-                {sales.map(s => (
-                  <li key={s._id} style={{
-                    marginBottom: '15px',
-                    padding: '15px',
-                    border: '1px solid #bbb',
-                    borderRadius: '8px',
-                    backgroundColor: '#fff',
-                    boxShadow: '2px 2px 5px rgba(0,0,0,0.1)',
-                  }}>
-                    <strong style={{ fontSize: '16px', color: '#333' }}>
-                      {s.productId?.name || 'Unknown Product'}
-                    </strong>
-                    <p style={{ fontSize: '14px', color: '#666', margin: '5px 0' }}>
-                      {new Date(s.date).toLocaleDateString()} | Quantity: {s.quantity} | Total: ${typeof s.total === 'number' ? s.total.toFixed(2) : 'N/A'}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          <SalesPage />
         )}
 
         {activeSection === 'queries' && (

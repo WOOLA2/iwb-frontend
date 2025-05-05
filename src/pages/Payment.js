@@ -68,7 +68,7 @@ const Payment = () => {
         if (!res.ok) {
           const errorText = await res.text();
           console.error(`Failed to fetch product ${item.name}: Status ${res.status}, ${errorText}`);
-          setError(`Product ${item.name} not found. Clearing cart.`);
+          setError(`Product ${item.name} not found or inaccessible. Clearing cart.`);
           setCart([]);
           localStorage.removeItem('cart');
           return;
@@ -108,6 +108,11 @@ const Payment = () => {
         if (!updateRes.ok) {
           const errorText = await updateRes.text();
           console.error(`Stock update error for ${item.name}: Status ${updateRes.status}, ${errorText}`);
+          if (updateRes.status === 401) {
+            setError(`Cannot update stock for ${item.name}: Unauthorized access. Please contact support.`);
+          } else {
+            setError(`Failed to update stock for ${item.name}: ${errorText}`);
+          }
           throw new Error(`Failed to update stock for ${item.name}: ${errorText}`);
         }
         console.log(`Stock updated for ${item.name}`);
@@ -128,6 +133,11 @@ const Payment = () => {
         if (!saleRes.ok) {
           const errorText = await saleRes.text();
           console.error(`Sale creation error for ${item.name}: Status ${saleRes.status}, ${errorText}`);
+          if (saleRes.status === 401) {
+            setError(`Cannot record sale for ${item.name}: Unauthorized access. Please contact support.`);
+          } else {
+            setError(`Failed to record sale for ${item.name}: ${errorText}`);
+          }
           throw new Error(`Failed to record sale for ${item.name}: ${errorText}`);
         }
         console.log(`Sale recorded for ${item.name}`);
